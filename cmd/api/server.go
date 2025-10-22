@@ -32,7 +32,7 @@ func (app *application) serve() error {
 
 		s := <-quit
 
-		app.logger.Info("Caought signal", "signal", s.String())
+		app.logger.Info("Caught signal", "signal", s.String())
 
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()

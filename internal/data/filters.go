@@ -1,6 +1,7 @@
 package data
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/vj-2303/greenlight/internal/validator"
@@ -30,10 +31,8 @@ func ValidateFilters(v *validator.Validator, f Filters) {
 }
 
 func (f Filters) sortColumn() string {
-	for _, safeValue := range f.SortSafeList {
-		if f.Sort == safeValue {
-			return strings.TrimPrefix(f.Sort, "-")
-		}
+	if slices.Contains(f.SortSafeList, f.Sort) {
+		return strings.TrimPrefix(f.Sort, "-")
 	}
 	panic("unsafe sort parameter: " + f.Sort)
 }

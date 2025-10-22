@@ -88,6 +88,7 @@ func (app *application) updateMovieHandler(w http.ResponseWriter, r *http.Reques
 		default:
 			app.serverErrorResponse(w, r, err)
 		}
+		return
 	}
 	var input struct {
 		Title   *string       `json:"title"`
