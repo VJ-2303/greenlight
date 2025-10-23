@@ -1,3 +1,4 @@
+// Package data will have all the required function to communicate with the DB
 package data
 
 import (

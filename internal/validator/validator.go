@@ -1,3 +1,4 @@
+// Package validator will have an struct which holds the Errors map and some essentails functios regarding that
 package validator
 
 import (
@@ -5,9 +6,7 @@ import (
 	"slices"
 )
 
-var (
-	EmailRX = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
-)
+var EmailRX = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 
 type Validator struct {
 	Errors map[string]string
@@ -22,7 +21,6 @@ func (v *Validator) Valid() bool {
 }
 
 func (v *Validator) AddError(key, message string) {
-
 	if _, exists := v.Errors[key]; !exists {
 		v.Errors[key] = message
 	}

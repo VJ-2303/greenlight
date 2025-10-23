@@ -18,7 +18,6 @@ import (
 type envelope map[string]any
 
 func (app *application) readIDParam(r *http.Request) (int64, error) {
-
 	params := httprouter.ParamsFromContext(r.Context())
 	id, err := strconv.ParseInt(params.ByName("id"), 10, 64)
 	if err != nil || id < 1 {
@@ -28,7 +27,6 @@ func (app *application) readIDParam(r *http.Request) (int64, error) {
 }
 
 func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
-
 	js, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
 		return err
@@ -45,14 +43,14 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data envelo
 }
 
 func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any) error {
-
 	r.Body = http.MaxBytesReader(w, r.Body, 1_048_576)
+
+	defer r.Body.Close()
 
 	dec := json.NewDecoder(r.Body)
 	dec.DisallowUnknownFields()
 
 	err := dec.Decode(dst)
-
 	if err != nil {
 		var syntaxError *json.SyntaxError
 		var unmarshalTypeError *json.UnmarshalTypeError
@@ -112,7 +110,6 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst any
 }
 
 func (app *application) readString(qs url.Values, key string, defaultValue string) string {
-
 	s := qs.Get(key)
 
 	if s == "" {
@@ -122,7 +119,6 @@ func (app *application) readString(qs url.Values, key string, defaultValue strin
 }
 
 func (app *application) readCSV(qs url.Values, key string, defaultValue []string) []string {
-
 	csv := qs.Get(key)
 
 	if csv == "" {
@@ -132,7 +128,6 @@ func (app *application) readCSV(qs url.Values, key string, defaultValue []string
 }
 
 func (app *application) readInt(qs url.Values, key string, defaultValue int, v *validator.Validator) int {
-
 	s := qs.Get(key)
 
 	if s == "" {
